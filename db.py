@@ -2,10 +2,9 @@ from sqlalchemy import BIGINT, create_engine
 from sqlalchemy.orm import declarative_base, DeclarativeBase, Mapped, mapped_column
 
 
-engine = create_engine('postgresql+psycopg2://postgres:1@localhost:5432/postgres')
+engine = create_engine('postgresql+psycopg2://postgres:1@p28pg:5432/postgres')
 class Base(DeclarativeBase):
     pass
-
 
 class User(Base):
     __tablename__ = "users"

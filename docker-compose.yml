@@ -1,0 +1,25 @@
+
+
+services:
+  bot:
+      build: .
+      image: p28savebot:alpine
+      container_name: p28savebot_con
+      restart: always
+      command: sh -c "python3 main.py"
+      depends_on:
+        - p28pg
+  p28pg:
+    image: postgres:alpine
+    container_name: p28_pg
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 1
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+
+volumes:
+  pg_data:
+
+
