@@ -1,0 +1,90 @@
+1) termius download
+2) server:
+    IP : 5.42.220.153
+    USER: root
+    password: z*k^x2DXUN*AK8
+
+3) ServerProject.zip -> docker compose up
+4) git create repository
+5) project git push /var/www/p28/
+6) server pull
+
+
+
+
+
+/etc/nginx/sites-available/aslmedia
+/etc/nginx/sites-enable/aslmedia
+5.42.220.153:8000
+server {
+    listen       8000;
+    server_name  5.42.220.153;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+
+    location /static/ {
+        root /var/www/maxsud/aslmedia/;
+    }
+
+    location /media/ {
+        root /var/www/maxsud/aslmedia/;
+    }
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/var/www/maxsud/aslmedia/falcon.sock;
+    }
+
+}
+
+
+
+
+
+
+
+/etc/systemd/system/aslmedia.service
+
+
+[Unit]
+Description=gunicorn daemon
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/var/www/maxsud/aslmedia
+ExecStart=/var/www/maxsud/aslmedia/.venv/bin/gunicorn --workers 3 --bind unix:/var/www/maxsud/aslmedia/falcon.sock config.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+systemctl start aslmedia.service
+systemctl enable aslmedia.service
+
+
+systemctl start service
+systemctl enable service
+systemctl stop service
+systemctl restart service
+
+
+
+
+1. comp -> github, gitlab, bitbucket -> server
+
+2. comp -> server
+
+
+
+scp file root@IP:/var/www
+python3 manage.py runserver 0:8004
+
+
+
+/etc/nginx/sites-available/falcon
+ln -s /etc/nginx/sites-available/aslmedia /etc/nginx/sites-enabled/
+
+/etc/nginx/sites-enabled/
